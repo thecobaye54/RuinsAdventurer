@@ -1,0 +1,105 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://Assets/fonts/Akaya_Telivigala/AkayaTelivigala-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scenes/levels/Tutorial.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/LevelsMenu.tscn" type="PackedScene" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 160
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+tutorialScene = ExtResource( 3 )
+levelsMenuScene = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.160784, 0.160784, 0.160784, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sep" type="Control" parent="VBoxContainer"]
+margin_right = 1280.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 1280.0
+margin_bottom = 217.0
+custom_fonts/font = SubResource( 1 )
+text = "Ruins Adventurer"
+align = 1
+valign = 1
+
+[node name="Separator" type="Control" parent="VBoxContainer"]
+margin_top = 221.0
+margin_right = 1280.0
+margin_bottom = 301.0
+rect_min_size = Vector2( 0, 80 )
+
+[node name="Button_Tutorial" type="Button" parent="VBoxContainer"]
+margin_left = 500.0
+margin_top = 305.0
+margin_right = 780.0
+margin_bottom = 385.0
+rect_min_size = Vector2( 280, 80 )
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 2 )
+text = "Tutorial"
+
+[node name="Separator2" type="Control" parent="VBoxContainer"]
+margin_top = 389.0
+margin_right = 1280.0
+margin_bottom = 429.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="Button_Levels" type="Button" parent="VBoxContainer"]
+margin_left = 500.0
+margin_top = 433.0
+margin_right = 780.0
+margin_bottom = 513.0
+rect_min_size = Vector2( 280, 80 )
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 2 )
+text = "Levels"
+
+[node name="Separator3" type="Control" parent="VBoxContainer"]
+margin_top = 517.0
+margin_right = 1280.0
+margin_bottom = 557.0
+rect_min_size = Vector2( 0, 40 )
+
+[node name="Button_Quit" type="Button" parent="VBoxContainer"]
+margin_left = 500.0
+margin_top = 561.0
+margin_right = 780.0
+margin_bottom = 641.0
+rect_min_size = Vector2( 280, 80 )
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 2 )
+text = "Quit"
+[connection signal="pressed" from="VBoxContainer/Button_Tutorial" to="." method="_on_Button_Tutorial_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button_Levels" to="." method="_on_Button_Levels_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button_Quit" to="." method="_on_Button_Quit_pressed"]

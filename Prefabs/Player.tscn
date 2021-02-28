@@ -1,0 +1,92 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/images/light_lamp_mask.png" type="Texture" id=1]
+[ext_resource path="res://Assets/images/Player/fedora.png" type="Texture" id=2]
+[ext_resource path="res://Prefabs/Scripts/Player.gd" type="Script" id=3]
+[ext_resource path="res://Assets/images/circular_light_mask.png" type="Texture" id=4]
+[ext_resource path="res://Prefabs/Scripts/PlayerCapabilities/CapabilitiesHandler.gd" type="Script" id=5]
+[ext_resource path="res://Prefabs/PlayerCapabilities/CheckAround.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/PlayerCapabilities/LightAround.tscn" type="PackedScene" id=7]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 28.1771
+height = 7.82542
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 34.1507
+
+[sub_resource type="Animation" id=3]
+resource_name = "hurt"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerHead:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.988235, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource( 3 )
+speed = 150.0
+
+[node name="CapabilitiesHandler" type="Node2D" parent="."]
+script = ExtResource( 5 )
+caps = [ ExtResource( 6 ), ExtResource( 7 ) ]
+cooldowns = [ NodePath("Cooldowns/CheckAroundCooldown"), NodePath("Cooldowns/LightAroundCooldown") ]
+
+[node name="Cooldowns" type="Node" parent="CapabilitiesHandler"]
+
+[node name="CheckAroundCooldown" type="Timer" parent="CapabilitiesHandler/Cooldowns"]
+wait_time = 10.0
+one_shot = true
+
+[node name="LightAroundCooldown" type="Timer" parent="CapabilitiesHandler/Cooldowns"]
+wait_time = 10.0
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Torch" type="Light2D" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 150, 0 )
+color = Color( 0.937255, 0.972549, 0.639216, 1 )
+range_layer_max = 1
+shadow_enabled = true
+
+[node name="PlayerHead" type="Sprite" parent="."]
+scale = Vector2( 0.26, 0.3 )
+z_index = 1025
+texture = ExtResource( 2 )
+
+[node name="HatLight" type="Light2D" parent="PlayerHead"]
+texture = ExtResource( 2 )
+energy = 2.0
+range_z_max = 1025
+range_layer_max = 1
+
+[node name="LightAround" type="Light2D" parent="."]
+texture = ExtResource( 4 )
+texture_scale = 0.8
+energy = 1.5
+range_layer_max = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/hurt = SubResource( 3 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

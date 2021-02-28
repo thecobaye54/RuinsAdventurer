@@ -1,0 +1,172 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/fonts/roboto.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/Game-UI.gd" type="Script" id=2]
+[ext_resource path="res://Assets/images/plain.png" type="Texture" id=3]
+[ext_resource path="res://Assets/images/circle.png" type="Texture" id=4]
+[ext_resource path="res://Assets/fonts/Roboto/Roboto-Regular.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Assets/images/capabilities/reveal.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/ui/CapabilityUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/images/capabilities/circular_light.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 60
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 5 )
+
+[node name="Game-UI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.396851
+margin_bottom = 0.396851
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatsBar" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+margin_top = 12.0
+margin_right = -1.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sep" type="Control" parent="StatsBar"]
+margin_right = 20.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 20, 0 )
+
+[node name="Health" type="HBoxContainer" parent="StatsBar"]
+margin_left = 24.0
+margin_right = 423.0
+margin_bottom = 71.0
+
+[node name="Label" type="Label" parent="StatsBar/Health"]
+margin_top = 11.0
+margin_right = 147.0
+margin_bottom = 59.0
+custom_fonts/font = SubResource( 1 )
+text = "Health : "
+align = 1
+valign = 1
+
+[node name="Health_1" type="TextureRect" parent="StatsBar/Health"]
+self_modulate = Color( 0.811765, 0, 0, 1 )
+margin_left = 151.0
+margin_right = 231.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 80, 0 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="Health_2" type="TextureRect" parent="StatsBar/Health"]
+self_modulate = Color( 0.811765, 0, 0, 1 )
+margin_left = 235.0
+margin_right = 315.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 80, 0 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="Health_3" type="TextureRect" parent="StatsBar/Health"]
+self_modulate = Color( 0.811765, 0, 0, 1 )
+margin_left = 319.0
+margin_right = 399.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 80, 0 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="Separator" type="Control" parent="StatsBar"]
+margin_left = 427.0
+margin_right = 1027.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 600, 0 )
+
+[node name="Treasures" type="HBoxContainer" parent="StatsBar"]
+margin_left = 1031.0
+margin_right = 1143.0
+margin_bottom = 71.0
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="StatsBar/Treasures"]
+self_modulate = Color( 1, 0.960784, 0, 1 )
+margin_right = 60.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 60, 0 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="Separator2" type="Control" parent="StatsBar/Treasures"]
+margin_left = 64.0
+margin_right = 74.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="Label" type="Label" parent="StatsBar/Treasures"]
+margin_left = 78.0
+margin_right = 112.0
+margin_bottom = 71.0
+custom_fonts/font = SubResource( 2 )
+text = "0"
+valign = 1
+
+[node name="Hint" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -185.0
+margin_top = -150.0
+margin_right = 189.0
+margin_bottom = -114.0
+custom_fonts/font = ExtResource( 1 )
+text = "Press E to open the treasure"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Capabilities" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -90.0
+margin_top = -100.0
+margin_right = 170.0
+margin_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 0.7, 0.7 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckAround" parent="Capabilities" instance=ExtResource( 7 )]
+margin_right = 128.0
+icon = ExtResource( 6 )
+key = "1"
+
+[node name="LightAround" parent="Capabilities" instance=ExtResource( 7 )]
+margin_left = 132.0
+margin_right = 260.0
+icon = ExtResource( 8 )
+key = "2"

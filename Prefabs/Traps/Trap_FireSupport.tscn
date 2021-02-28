@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Prefabs/Obstacle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Scripts/Trap/Trap_FireSupport.gd" type="Script" id=2]
+[ext_resource path="res://Assets/images/circular_light_mask.png" type="Texture" id=3]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.445578, 0.608844, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.98919, 0.72615, 0.037415, 1, 1, 0.700195, 0, 1, 1, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.861199, 0.764773 ), -0.180114, -0.180114, 0, 0, Vector2( 0.987382, 0.0011363 ), -3.78239, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+lifetime_randomness = 0.2
+emission_shape = 2
+emission_box_extents = Vector3( 1, 100, 1 )
+flag_disable_z = true
+spread = 10.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 1000.0
+initial_velocity_random = 0.2
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 50.0
+scale_random = 0.2
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 260, 120 )
+
+[node name="Trap_FireSupport" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="." index="2"]
+position = Vector2( 128, 0 )
+emitting = false
+amount = 45
+lifetime = 0.6
+one_shot = true
+randomness = 0.2
+visibility_rect = Rect2( 0, -166.012, 592.448, 322.68 )
+process_material = SubResource( 5 )
+
+[node name="Pivot" type="Position2D" parent="." index="3"]
+
+[node name="Light2D" type="Light2D" parent="." index="4"]
+visible = false
+position = Vector2( 130, 0 )
+scale = Vector2( 20, 2.2 )
+texture = ExtResource( 3 )
+color = Color( 1, 0.678431, 0, 1 )
+energy = 1.5
+shadow_enabled = true
+
+[node name="Area2D" type="Area2D" parent="." index="5"]
+visible = false
+position = Vector2( 380, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource( 6 )
+
+[node name="Timer" type="Timer" parent="." index="6"]
+wait_time = 0.8
+one_shot = true
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
